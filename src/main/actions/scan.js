@@ -1,5 +1,6 @@
 import notify from '../notify'
 import {W3afWrapper} from '../scanners/w3af'
+import {DockerBenchWrapper} from '../scanners/docker-bench'
 
 var webScanner = {
   scan(url) {
@@ -33,6 +34,17 @@ var dockerScanner = {
     title: 'Scanning item...',
     body: `Your docker file is being scanned. ${dockerFile}`
     })
+
+    var db = new DockerBenchWrapper()
+    db.scan().then((result) => {
+      console.log(result)
+      notify({
+          title: 'Scan completed',
+          body: `Your docker file has been scanned. ${dockerFile}`
+        })
+    }).catch((err) => {
+      console.error(err)
+    });
   }
 }
 export {webScanner, dockerScanner}
