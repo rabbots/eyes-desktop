@@ -1,0 +1,41 @@
+
+plugins
+output console, xml_file
+output
+output config xml_file
+set output_file /share/output-w3af.xml
+set verbose False
+back
+output config console
+set verbose True
+back
+
+crawl web_spider
+# crawl all, !bing_spider, !google_spider, !spider_man
+crawl
+
+audit sqli
+audit xss
+# audit all
+audit
+
+# bruteforce all
+
+back
+
+target
+set target <%target%>
+back
+
+misc-settings
+set max_discovery_time 5
+set stop_on_first_exception True
+back
+
+http-settings
+set timeout 15
+back
+
+start
+
+exit
