@@ -1,13 +1,13 @@
-import {Promise} from 'es6-promise'
+import path from 'path'
 import {spawn} from 'child_process'
 import mkdirp from 'mkdirp'
 import fs from 'fs-promise'
 import x2js from 'xml2json'
 import {resolve as resolvePath} from 'app-root-path'
 
-function mkdirpAsync(path, mode) {
+function mkdirpAsync(p) {
   return new Promise((resolve, reject) => {
-    mkdirp(path, mode, (err) => {
+    mkdirp(p, (err) => {
       if (err) {
         reject(err);
       } else {
@@ -17,17 +17,17 @@ function mkdirpAsync(path, mode) {
   });
 }
 
-var deleteFolderRecursive = function (path) {
-  if( fs.existsSync(path) ) {
-    fs.readdirSync(path).forEach(function(file,index){
-      var curPath = path + "/" + file;
+var deleteFolderRecursive = function (p) {
+  if( fs.existsSync(p) ) {
+    fs.readdirSync(p).forEach(function(file,index){
+      var curPath = p + "/" + file;
       if(fs.lstatSync(curPath).isDirectory()) { // recurse
         deleteFolderRecursive(curPath);
       } else { // delete file
         fs.unlinkSync(curPath);
       }
     });
-    fs.rmdirSync(path);
+    fs.rmdirSync(p);
   }
 };
 
@@ -47,10 +47,10 @@ class W3afWrapper {
   init(name) {
     this._name = name || makeid(5);
     this._containerShare = '/share'
-    this._hostTmpPath = `/Users/niponc/.rabbots/w3af/${this._name}`
-    this._tmpSharePath = `${this._hostTmpPath}/script.w3af`
-    this._scriptFileName = `${this._containerShare}/script.w3af`
-    this._hostOutputFileName = `${this._hostTmpPath}/output-w3af.xml`
+    this._hostTmpPath = path.join(process.env['HOME'], '.rabbots', 'w3af', this._name)
+    this._tmpSharePath = path.join(this._hostTmpPath, 'script.w3af')
+    this._scriptFileName = path.join(this._containerShare, 'script.w3af')
+    this._hostOutputFileName = path.join(this._hostTmpPath, 'output-w3af.xml')
   }
 
   start(url){
@@ -63,7 +63,7 @@ class W3afWrapper {
     // Make directory
     // TODO: do we really need 777 permission?
     process.umask(0);
-    return mkdirpAsync(this._hostTmpPath, '777')
+    return mkdirpAsync(this._hostTmpPath)
       .then(() => {
         console.log('Loading script template script')
         return fs.readFile(resolvePath('./scanners/script.w3af'), {encoding:'utf8'})
@@ -112,7 +112,7 @@ class W3afWrapper {
   _onProcessComplete() {
     fs.readFile(this._hostOutputFileName, {encoding:'utf8'}).then(
       (contents) => {
-        return x2js.toJson(contents)
+        return x2js.toJson(contents, {object: true})
       }).then((jsonReport) => {
         this._processComplete && this._processComplete(jsonReport)
       }
@@ -127,7 +127,7 @@ class W3afWrapper {
 
   cleanUp() {
     console.log(`Clean up path: ${this._hostTmpPath}`)
-    // deleteFolderRecursive(this._hostTmpPath)
+    deleteFolderRecursive(this._hostTmpPath)
   }
 
   // TODO: able to query status: i.e. elapse time, state

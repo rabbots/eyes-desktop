@@ -1,6 +1,30 @@
 import notify from '../notify'
 import {W3afWrapper} from '../scanners/w3af'
 import {DockerBenchWrapper} from '../scanners/docker-bench'
+import mkdirp from 'mkdirp'
+import fs from 'fs-promise'
+import path from 'path'
+
+const resultPath = path.join(process.env['HOME'], '.rabbots', 'result')
+
+function saveResult(fileName, result){
+  return mkdirpAsync(resultPath)
+    .then(() => {
+      return fs.writeFile(path.join(resultPath, fileName), JSON.stringify(result, null, '\t'))
+    })
+}
+
+function mkdirpAsync(p) {
+  return new Promise((resolve, reject) => {
+    mkdirp(p, (err) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve()
+      }
+    })
+  });
+}
 
 var webScanner = {
   scan(url) {
@@ -13,11 +37,12 @@ var webScanner = {
     return w3afWrapper.start(url)
       .then((result) => {
         console.log('## DONE ##')
-        console.log(JSON.stringify(result))
+        console.log(result)
         notify({
           title: 'Scan completed',
           body: `Your website has been scanned. ${url}`
         })
+        return saveResult('w3af.json', result)
       }).then(() => {
         w3afWrapper.cleanUp()
       })
@@ -42,6 +67,7 @@ var dockerScanner = {
           title: 'Scan completed',
           body: `Your docker file has been scanned. ${dockerFile}`
         })
+        return saveResult('docker-bench.json', result)
     }).catch((err) => {
       console.error(err)
     });
