@@ -1,4 +1,3 @@
-import {Promise} from 'es6-promise'
 import {spawn} from 'child_process'
 
 class DockerBenchWrapper {
