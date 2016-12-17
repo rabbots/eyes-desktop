@@ -28,7 +28,7 @@ set target <%target%>
 back
 
 misc-settings
-set max_discovery_time 5
+set max_discovery_time 3
 set stop_on_first_exception True
 back
 
