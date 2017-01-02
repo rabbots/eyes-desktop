@@ -1,0 +1,13 @@
+clair:
+  port: 6060
+  healthPort: 6061
+  uri: http://192.168.99.100
+  priority: Low
+  report:
+    path: ./reports
+    format: html
+hyperclair:
+  ip: 192.168.99.1
+  interface: virtualbox
+
+
