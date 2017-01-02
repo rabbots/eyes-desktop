@@ -1,6 +1,7 @@
 import notify from '../notify'
 import {W3afWrapper} from '../scanners/w3af'
 import {DockerBenchWrapper} from '../scanners/docker-bench'
+import {ClairScanner} from '../scanners/clair'
 import mkdirp from 'mkdirp'
 import fs from 'fs-promise'
 import path from 'path'
@@ -60,8 +61,8 @@ var dockerScanner = {
     body: `Your docker file is being scanned. ${dockerFile}`
     })
 
-    var db = new DockerBenchWrapper()
-    db.scan().then((result) => {
+    var db = new ClairScanner()
+    db.scan(dockerFile).then((result) => {
       console.log(result)
       notify({
           title: 'Scan completed',
