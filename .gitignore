@@ -1,5 +1,6 @@
 # build output
 app/dist
+app/reports
 dist
 
 # dependencies
