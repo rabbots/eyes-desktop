@@ -24,6 +24,9 @@ import {refreshCache} from './api'
 import attachTrayState from './utils/highlight'
 import toggleWindow from './utils/toggle-window'
 import * as binaryUtils from './utils/binary'
+import {webScanner, dockerScanner} from './actions/scan'
+import dockerfileUtil from './utils/dockerfileUtil'
+import urlUtil from './utils/url'
 
 // Log uncaught exceptions to a file
 // Locations: megahertz/electron-log
@@ -307,6 +310,22 @@ const isDeployable = async directory => {
 const fileDropped = async (event, files) => {
   event.preventDefault()
 
+  console.log(`File dropped: ${files}`)
+  var filePath = files[0]
+  dockerfileUtil.isDockerFile(filePath).then(isDockerFile => {
+    console.log(`isDockerFile: ${isDockerFile}`)
+    if (isDockerFile) {
+      dockerScanner.scan(filePath)
+    } else {
+      handleNowFileDropped(event, files)
+    }
+  }, error => {
+    console.error(error)
+  })
+}
+
+const handleNowFileDropped = async (event, files) => {
+
   if (process.env.CONNECTION === 'offline') {
     showError('You\'re offline')
     return
@@ -331,6 +350,16 @@ const fileDropped = async (event, files) => {
   }
 
   await deploy(item)
+}
+
+const textDropped = async (event, text) => {
+  event.preventDefault()
+
+  var isUrl = urlUtil.isUrl(text)
+  console.log(`Text dropped: url? ${isUrl}, ${text}`)
+  if (isUrl) {
+    webScanner.scan(text)
+  }
 }
 
 app.on('ready', async () => {
@@ -406,6 +435,7 @@ app.on('ready', async () => {
 
   // Define major event listeners for tray
   tray.on('drop-files', fileDropped)
+  tray.on('drop-text', textDropped)
   tray.on('click', toggleActivity)
 
   let isHighlighted = false

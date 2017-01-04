@@ -1,5 +1,6 @@
 # build output
 app/dist
+app/reports
 dist
 
 # dependencies
@@ -7,3 +8,7 @@ node_modules
 
 # logs
 npm-debug.log
+
+# misc
+.DS_Store
+
