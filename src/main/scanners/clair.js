@@ -112,22 +112,10 @@ function deleteContainer(containerTag) {
   })
 }
 
-function pushImage(imageName) {
-
-}
-
-function analyseClair(imageName) {
-
-}
-
-function genReport() {
-
-}
-
 function copyReport(sessionId) {
   var sid = sessionId || makeid(5)
   var reportPath = path.join(scannersDir, 'reports', 'html')
-  var targetPath = path.join(process.env['HOME'], '.rabbots', 'result', sid)
+  var targetPath = path.join(process.env['HOME'], '.rabbots', 'result', 'Clair', sid)
   console.log(`Copy Report to ${targetPath}`)
 
   return new Promise((accept, reject) => {
@@ -291,59 +279,7 @@ function printStdErr(data) {
 function printExitCode(code) {
   console.log(`close: ${code}`)
 }
-//export {ClairWrapper}
 
-// if (process.argv.length <3) {
-//   console.error('Missing docker file')
-//   return
-// }
-
-var omitStd = true
+var omitStd = false
 module.exports.ClairScanner = ClairScanner
 
-// var dockerFilePath = process.argv[2]
-// console.log(`docker file: ${dockerFilePath}`)
-
-// var clairScanner = new ClairScanner()
-// var dockerImageName = 'rabbots/base'
-// console.log(`imageName: ${dockerImageName}`)
-// clairScanner.scan(dockerFilePath)
-// return
-
-// var hc = new HyperClair()
-// hc.health().then((result) => {
-//   if (result) {
-//     return Promise.resolve(true)
-//   } else {
-//     return startClair()
-//   }
-// }).then((result) => {
-//   if (result) {
-//     return buildConatiner(dockerFilePath).then((tag) => {dockerImageName = tag; return true})
-//   }
-// }).then((result) => {
-//   if (result) {
-//     return hc.push(dockerImageName)
-//   }
-// }).then((result) => {
-//   if (result) {
-//     return hc.analyse(dockerImageName)
-//   }
-// }).then((result) => {
-//   if (result) {
-//     return hc.report(dockerImageName)
-//   }
-// }).then(() => {
-//   var tag = dockerImageName
-//   dockerImageName = ''
-//   if (tag) {
-//     deleteContainer(tag)
-//   }
-//   return copyReport()
-// }).catch((error) => {
-//   console.log('error: '+ error)
-//   if (dockerImageName){
-//     deleteContainer(dockerImageName)
-//   }
-//   return false
-// })

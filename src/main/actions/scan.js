@@ -61,14 +61,14 @@ var dockerScanner = {
     body: `Your docker file is being scanned. ${dockerFile}`
     })
 
-    var db = new ClairScanner()
-    db.scan(dockerFile).then((result) => {
+    var cs = new ClairScanner()
+    return cs.scan(dockerFile).then((result) => {
       console.log(result)
+
       notify({
-          title: 'Scan completed',
-          body: `Your docker file has been scanned. ${dockerFile}`
+          title: `Scan ${result?'completed':'failed'}`,
+          body: `Your docker file has ${result?'':'not'} been scanned. ${dockerFile}`
         })
-        return saveResult('docker-bench.json', result)
     }).catch((err) => {
       console.error(err)
     });
