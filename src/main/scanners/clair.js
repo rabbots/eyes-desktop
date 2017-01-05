@@ -1,5 +1,4 @@
 var path = require('path')
-var Dockerode = require('dockerode')
 var fs = require('fs-promise')
 var spawn = require('child_process').spawn
 var spawnSync = require('child_process').spawnSync
@@ -14,9 +13,9 @@ var mv = require('mv')
 // save report to output folder
 // remove image file
 
-//./hyperclair report rabbots/w3af --local --config ./hyperclair.yml --log-level Debug
-//./hyperclair analyse rabbots/w3af --local --config ./hyperclair.yml --log-level Debug
-//./hyperclair push rabbots/w3af --local --config ./hyperclair.yml --log-level Debug
+//./hyperclair report rabbot/w3af --local --config ./hyperclair.yml --log-level Debug
+//./hyperclair analyse rabbot/w3af --local --config ./hyperclair.yml --log-level Debug
+//./hyperclair push rabbot/w3af --local --config ./hyperclair.yml --log-level Debug
 
 var scannersDir = resolvePath('./scanners/')
 var clairDCFile = 'clair-docker-compose.yml'
@@ -66,7 +65,7 @@ function buildConatiner(imagePath, sessionId) {
   var sid = sessionId || makeid(5).toLowerCase()
   var imageDir = path.dirname(imagePath)
   var imageFilename = path.basename(imagePath)
-  var imageTag = `rabbotsscan/${sid}`
+  var imageTag = `rabbotscan/${sid}`
   var containerId;
   console.log(`Building container: ${imagePath} as ${imageTag}`)
   return new Promise((accept, reject) => {
@@ -115,7 +114,7 @@ function deleteContainer(containerTag) {
 function copyReport(sessionId) {
   var sid = sessionId || makeid(5)
   var reportPath = path.join(scannersDir, 'reports', 'html')
-  var targetPath = path.join(process.env['HOME'], '.rabbots', 'result', 'Clair', sid)
+  var targetPath = path.join(process.env['HOME'], '.rabbot', 'result', 'Clair', sid)
   console.log(`Copy Report to ${targetPath}`)
 
   return new Promise((accept, reject) => {
