@@ -47,7 +47,7 @@ class W3afWrapper {
   init(name) {
     this._name = name || makeid(5);
     this._containerShare = '/share'
-    this._hostTmpPath = path.join(process.env['HOME'], '.rabbots', 'w3af', this._name)
+    this._hostTmpPath = path.join(process.env['HOME'], '.rabbot', 'w3af', this._name)
     this._tmpSharePath = path.join(this._hostTmpPath, 'script.w3af')
     this._scriptFileName = path.join(this._containerShare, 'script.w3af')
     this._hostOutputFileName = path.join(this._hostTmpPath, 'output-w3af.xml')
@@ -80,7 +80,7 @@ class W3afWrapper {
         console.log('start docker: ' + `${this._hostTmpPath}:${this._containerShare}`)
         this._dockerCmd = spawn(
           'docker',
-          ['run',  '-v', `${this._hostTmpPath}:${this._containerShare}`, 'rabbots/w3af', '-s', this._scriptFileName]);
+          ['run',  '-v', `${this._hostTmpPath}:${this._containerShare}`, 'rabbot/w3af', '-s', this._scriptFileName]);
 
         this._dockerCmd.stdout.on('data', this._onStdOut.bind(this));
         this._dockerCmd.stderr.on('data', this._onStdErr.bind(this));

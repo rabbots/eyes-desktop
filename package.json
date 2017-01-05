@@ -1,5 +1,5 @@
 {
-  "repository": "zeit/now-desktop",
+  "repository": "rabbots/eyes-desktop",
   "scripts": {
     "start": "electron app/dist/main",
     "postinstall": "install-app-deps && webpack",
@@ -10,7 +10,7 @@
     "pack": "npm run build && build --dir"
   },
   "build": {
-    "appId": "co.zeit.now",
+    "appId": "io.rabbot.eyes",
     "category": "public.app-category.developer-tools",
     "asar": false
   },
