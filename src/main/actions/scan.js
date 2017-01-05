@@ -6,7 +6,7 @@ import mkdirp from 'mkdirp'
 import fs from 'fs-promise'
 import path from 'path'
 
-const resultPath = path.join(process.env['HOME'], '.rabbots', 'result')
+const resultPath = path.join(process.env['HOME'], '.rabbot', 'result')
 
 function saveResult(fileName, result){
   return mkdirpAsync(resultPath)
