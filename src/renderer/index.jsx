@@ -19,8 +19,8 @@ import logoSVG from './vectors/logo'
 import arrowSVG from './vectors/arrow'
 import updatedSVG from './vectors/updated'
 
-const anchorWelcome = document.querySelector('#welcome-to-now > div')
-const anchorAbout = document.querySelector('#about-now > div')
+const anchorWelcome = document.querySelector('#welcome-to-eyes > div')
+const anchorAbout = document.querySelector('#about-eyes > div')
 
 const SliderArrows = React.createClass({
   render() {
