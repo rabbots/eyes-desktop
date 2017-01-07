@@ -33,7 +33,7 @@ const getVerificationData = async (url, email) => {
 
   const body = JSON.stringify({
     email,
-    tokenName: 'Now on ' + host
+    tokenName: 'Eyes on ' + host
   })
 
   const apiURL = `${url}/now/registration`

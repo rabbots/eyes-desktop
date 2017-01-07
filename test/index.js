@@ -9,7 +9,7 @@ let app
 
 test.before(async () => {
   app = new Application({
-    path: path.join(__dirname, '../dist/mac/Now.app/Contents/MacOS/Now'),
+    path: path.join(__dirname, '../dist/mac/Eyes.app/Contents/MacOS/Eyes'),
     env: {
       TESTING: true
     }

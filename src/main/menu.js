@@ -22,7 +22,7 @@ export function deploymentOptions(info) {
         click: () => shell.openExternal(url)
       },
       {
-        label: 'Copy URL to Clipboard',
+        label: 'Reveal file location',
         click() {
           clipboard.writeText(url)
 
@@ -74,16 +74,18 @@ export async function innerMenu(app, tray, data, windows) {
       type: 'separator'
     },
     {
-      label: 'Deploy...',
+      label: 'Check Security...',
       accelerator: 'CmdOrCtrl+D',
       async click() {
+        // TODO : Replace with security tool check.
         await deploy(tray)
       }
     },
     {
-      label: 'Share...',
+      label: 'Check Speed...',
       accelerator: 'CmdOrCtrl+S',
       async click() {
+        // TODO : Replace with speed tool check.
         await share(tray)
       }
     },
@@ -91,7 +93,18 @@ export async function innerMenu(app, tray, data, windows) {
       type: 'separator'
     },
     {
-      label: 'Deployments',
+      label: 'Abort',
+      accelerator: 'CmdOrCtrl+Z',
+      async click() {
+        // TODO : Replace with abort current check tools.
+        await deploy(tray)
+      }
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Results',
 
       // We need this because electron otherwise keeps the item alive
       // Even if the submenu is just an empty array

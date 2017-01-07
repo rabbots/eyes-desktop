@@ -59,9 +59,9 @@ if (isPlatform('macOS')) {
 }
 
 // Define the application name
-app.setName('Now')
+app.setName('Eyes')
 
-// Make Now start automatically on login
+// Make Eyes start automatically on login
 if (!isDev && firstRun()) {
   app.setLoginItemSettings({
     openAtLogin: true
@@ -119,7 +119,7 @@ const onboarding = () => {
   const win = new BrowserWindow({
     width: 650,
     height: 430,
-    title: 'Welcome to Now',
+    title: 'Welcome to Eyes',
     resizable: false,
     center: true,
     frame: isPlatform('windows'),
@@ -166,7 +166,7 @@ const aboutWindow = () => {
   const win = new BrowserWindow({
     width: 360,
     height: 408,
-    title: 'About Now',
+    title: 'About Eyes',
     resizable: false,
     center: true,
     show: false,
@@ -317,14 +317,14 @@ const fileDropped = async (event, files) => {
     if (isDockerFile) {
       dockerScanner.scan(filePath)
     } else {
-      handleNowFileDropped(event, files)
+      handleEyesFileDropped(event, files)
     }
   }, error => {
     console.error(error)
   })
 }
 
-const handleNowFileDropped = async (event, files) => {
+const handleEyesFileDropped = async (event, files) => {
 
   if (process.env.CONNECTION === 'offline') {
     showError('You\'re offline')
@@ -413,7 +413,7 @@ app.on('ready', async () => {
     }
   }
 
-  // Only allow one instance of Now running
+  // Only allow one instance of Eyes running
   // at the same time
   app.makeSingleInstance(toggleActivity)
 

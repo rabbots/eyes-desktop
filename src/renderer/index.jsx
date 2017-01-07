@@ -155,7 +155,7 @@ const Sections = React.createClass({
           <SVGinline svg={logoSVG} width="90px"/>
 
           <h1>
-            <b>Now</b> &mdash; Realtime global deployments
+            <b>Eyes</b> &mdash; Realtime global deployments
           </h1>
         </section>
 
@@ -324,7 +324,7 @@ const AboutContent = React.createClass({
 
         <img src="../dist/icons/icon.ico"/>
 
-        <h1>Now</h1>
+        <h1>Eyes</h1>
         <h2>Version <b>{pkg.version}</b> {this.state.lastReleaseDate}</h2>
 
         {this.updateStatus()}

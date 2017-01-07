@@ -28,7 +28,7 @@ export default async section => {
   }
 
   const destination = utils.getPath()
-  const command = 'mv ' + location.path + ' ' + destination + '/now'
+  const command = 'mv ' + location.path + ' ' + destination + '/eyes'
 
   // If there's an existing binary, rename it
   try {
@@ -36,7 +36,7 @@ export default async section => {
   } catch (err) {}
 
   const sudoOptions = {
-    name: 'Now',
+    name: 'Eyes',
     icns: resolvePath('/dist/icons/icon.icns')
   }
 

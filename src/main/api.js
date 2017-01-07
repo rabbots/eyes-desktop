@@ -1,5 +1,5 @@
 // Packages
-import Now from 'now-client'
+import Eyes from 'now-client'
 import Config from 'electron-config'
 import chalk from 'chalk'
 
@@ -16,7 +16,7 @@ export function connector(userToken) {
     return false
   }
 
-  return new Now(token)
+  return new Eyes(token)
 }
 
 const refreshKind = async (name, session) => {

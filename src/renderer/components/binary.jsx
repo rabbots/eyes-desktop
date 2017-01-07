@@ -53,7 +53,7 @@ export default React.createClass({
   },
   async componentDidMount() {
     const binaryUtils = remote.getGlobal('binaryUtils')
-    const binaryPath = binaryUtils.getPath() + '/now'
+    const binaryPath = binaryUtils.getPath() + '/eyes'
 
     let stat
 
@@ -82,7 +82,7 @@ export default React.createClass({
     const element = this
 
     let classes = 'button install'
-    let installText = 'Install now'
+    let installText = 'Install eyes'
 
     if (this.state.binaryInstalled) {
       classes += ' off'
